@@ -81,7 +81,7 @@ select {
     margin: 0;
     box-sizing: border-box;
     word-wrap: break-word;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Montserrat', sans-serif;
   }
   .root{
     background-color: #E5E5E5;
