@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "../components/Header";
-import { addProductToCart, getProductById } from "../services/galeriaQuadros";
-import ModalError from "../shared/ModalError";
-import ModalSuccess from "../shared/ModalSuccess";
-import { PageContainer } from "../styles/ContainerStyle";
-import { CartButton, ProductImage, ProductName, ProductPresentationCard, ProductPrice } from "../styles/ProductInfoStyle";
+import { Header } from "../../components/Header";
+import { addProductToCart, getProductById } from "../../services/galeriaQuadros";
+import ModalError from "../../shared/ModalError";
+import ModalSuccess from "../../shared/ModalSuccess";
+import { PageContainer } from "../../styles/ContainerStyle";
+import { CartButton, ProductImage, ProductName, ProductPresentationCard, ProductPrice } from "../../styles/ProductInfoStyle";
 
 export function ProductPage() {
     const { idProduct } = useParams();
