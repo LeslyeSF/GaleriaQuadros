@@ -1,53 +1,54 @@
 import styled from 'styled-components';
 
 const Modal = styled.div`
-  width: 100vw;
-  height: 100vh;
+    width: 100vw;
+    height: 100vh;
 
-  background-color: rgba(140, 17, 190, 0.6);
+    background-color: rgba(212, 207, 188, 0.6);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  position: fixed;
-  top: 0;
-  left: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
 
-  z-index: 10;
+    z-index: 10;
 `;
 
 const Message = styled.div`
-  min-width: 50vw;
-  max-width: 90vw;
-  min-height: 50vw;
-  max-height: 40vh;
+    min-width: 50vw;
+    max-width: 90vw;
+    min-height: 50vw;
+    max-height: 40vh;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
 
-  background-color: #ffffff;
-  border: 1px solid #8c11be;
-  border-radius: 10px;
+    background-color: #E7E8E3;
+    border: 2px solid #7B7363;
+    border-radius: 10px;
 
-  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.15);
 
-  transition: all 0.4s ease 0, 3s;
+    transition: all 0.4s ease 0, 3s;
 
-  padding: 20px;
+    padding: 20px;
 
-  h1 {
-    color: #283d3b;
-    font-size: 26px;
-    text-align: center;
+    h1 {
+        color: #272A14;
+        font-size: 26px;
+        text-align: center;
 
-    padding: 20px 0;
-  }
+        padding: 20px 0;
+    }
 `;
 
 const ButtonModal = styled.button`
+
     width: 20vw;
 
     color: #ffffff;
@@ -55,7 +56,7 @@ const ButtonModal = styled.button`
     line-height: 42px;
     font-weight: bold;
 
-    background-color:  #a328d6;
+    background-color:  #BAAF98;
     border-radius: 5px;
 
     cursor: pointer;
@@ -64,7 +65,7 @@ const ButtonModal = styled.button`
 `;
 
 export { 
-  Modal,
-  Message,
-  ButtonModal,
+    Modal,
+    Message,
+    ButtonModal,
 };

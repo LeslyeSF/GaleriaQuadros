@@ -26,7 +26,7 @@ const Logo = styled.div`
     font-weight: 500;
 
     background-color: #7B7363;
-    border-radius: 10% 10% 20% 81% / 0% 0% 54% 76% ;
+    border-radius: 10% 10% 20% 81% / 0% 0% 54% 76%;
 
     padding-top: 10px;
 `;
