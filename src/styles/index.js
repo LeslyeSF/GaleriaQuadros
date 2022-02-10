@@ -53,6 +53,10 @@ picture {
   display: block;
 }
 
+img {
+  object-fit: cover;
+}
+
 /* Inherit fonts for inputs and buttons */
 input,
 button,
