@@ -1,4 +1,3 @@
-
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
@@ -94,5 +93,4 @@ select {
     display: flex;
     justify-content: center;
   }
-  
 `;
