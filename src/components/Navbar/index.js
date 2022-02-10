@@ -5,24 +5,24 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { FiSearch } from 'react-icons/fi';
 import { IconContext } from "react-icons/lib";
 
-export default function Navbar(){
+export default function Navbar({setShowWindow}){
   const [search, setSearch] = useState("");
   function handleSearch(){
-
+    alert(search);
   }
   return(
     <IconContext.Provider value={{className: "react-icons"}}>
       <SearchContainer>
-      <AiOutlineMenu onClick={()=> alert("hello")}/>
-      <InputConatiner>
-        <input 
-        placeholder={"Pesquisar"}
-        value={search}
-        onChange={e=> setSearch(e.target.value)}/>
-        <div onClick={handleSearch}><FiSearch/></div>
-      </InputConatiner>
-      <FaShoppingCart/>
-    </SearchContainer>
+        <AiOutlineMenu onClick={()=> setShowWindow(true)}/>
+        <InputConatiner>
+          <input 
+          placeholder={"Pesquisar"}
+          value={search}
+          onChange={e=> setSearch(e.target.value)}/>
+          <div onClick={handleSearch}><FiSearch/></div>
+        </InputConatiner>
+        <FaShoppingCart/>
+      </SearchContainer>
     </IconContext.Provider>
   );
 }

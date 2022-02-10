@@ -5,17 +5,21 @@ width: 375px;
 min-height: 100vh;
 
 background-color: #F8F7F3;
-padding-bottom: 50px;
+padding: 50px 0px 50px 0px;
 
 display: flex;
 flex-direction: column;
 align-items: center;
-gap: 5px;
+gap: 15px;
 `;
-const Carrosel = styled.div`
-width: 355px;
-height: 300px;
-
+const Carousel = styled.div`
+width: 375px;
+height: 220px;
+  div{
+    height: 200px;
+    overflow: hidden;
+  }
+padding: 10px;
 background-color: #D2CAC0;
 `;
 const OptionContainer = styled.div`
@@ -61,4 +65,4 @@ font-size: 20px;
 font-weight: 600;
 `;
 
-export {HomeScreen, Carrosel, OptionContainer, Option, Title};
+export {HomeScreen, Carousel, OptionContainer, Option, Title};
