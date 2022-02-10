@@ -38,8 +38,22 @@ const ProductPrice = styled.h2`
 `;
 
 const CartButton = styled.button`
+    all: unset;
+
+    width: 70vw;
+    height: 48px;
+
     color: #272A14;
     font-size: 20px;
+    text-align: center;
+
+    background-color: #E3E4DF;
+    border-radius: 15px;
+
+    margin-top: 10px;
+    align-self: flex-end;
+
+    cursor: pointer;
 `;
 
 export {
@@ -47,4 +61,5 @@ export {
     ProductImage,
     ProductName,
     ProductPrice,
+    CartButton,
 };
