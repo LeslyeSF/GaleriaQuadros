@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
-import { getProductById } from "../services/galeriaQuadros";
+import { addProductToCart, getProductById } from "../services/galeriaQuadros";
 import ModalError from "../shared/ModalError";
 import ModalSuccess from "../shared/ModalSuccess";
 import { PageContainer } from "../styles/ContainerStyle";
@@ -22,7 +22,7 @@ export function ProductPage() {
         getProductById(idProduct)
             .then((res) => setProduct(res.data))
             .catch((err) => {
-                if (err.status(404)) {
+                if (err?.status(404)) {
                     setMessageError('O produto não existe');
                     setModalError(true);
                     setTimeout(() => {
@@ -36,9 +36,8 @@ export function ProductPage() {
             });
     }, [idProduct, navigate])
     
-    function addToCart(idProduct) {
-        
-        addToCart({ idProduct, token })
+    function addToCart({ idProduct, token }) {
+        addProductToCart({ idProduct, token })
             .then((res) => {
                 setModalSuccess(true);
                 setTimeout(() => {
@@ -46,9 +45,16 @@ export function ProductPage() {
                 }, [])
             })
             .catch((err) => {
+                if (!token) {
+                    setMessageError('Antes, por favor faça login');
+                    setModalError(true);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
+                }
                 console.error();
-                setMessageError(err)
-                setModalError(true)
+                setMessageError(err);
+                setModalError(true);
             })
     }
 
@@ -64,7 +70,7 @@ export function ProductPage() {
                             <ProductPrice>{ product.price }</ProductPrice>
                         </ProductPresentationCard>
                         
-                        <CartButton onClick={ () => addToCart(idProduct) }>Adicionar no carrinho</CartButton>
+                        <CartButton onClick={ () => {addToCart({ idProduct, token })} }>Adicionar no carrinho</CartButton>
                         <ProductName>Artista: { product.artistName }</ProductName>
                     </>
                 : ''

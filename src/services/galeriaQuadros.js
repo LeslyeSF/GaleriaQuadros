@@ -7,13 +7,12 @@ function getProductById(id) {
 }
 
 function addProductToCart({ idProduct, token}) {
-    console.log('i')
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-    const promise = axios.post(`${api}/add/${ idProduct }`, config);
+    const promise = axios.post(`${api}/addtocart/${ idProduct }`, config);
     return promise;
 }
 
