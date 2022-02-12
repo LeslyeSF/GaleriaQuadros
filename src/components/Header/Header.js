@@ -1,14 +1,19 @@
-import { ActionButtons, Logo, NavBar } from "../styles/HeaderStyle";
+import { ActionButtons, Logo, LogoImage, NavBar } from "../../styles/HeaderStyle";
 import { IoMenu, IoCartSharp } from 'react-icons/io5'
+import { useNavigate } from "react-router-dom";
+import logo from '../../styles/logo-removebg-preview.png'
 
-export function Header() {
+export function Header({ setShowWindow }) {
+    const navigate = useNavigate();
     return (
         <NavBar>
-            <Logo>Galeria Quadros</Logo>
+            <Logo onClick={() => navigate('/')}>
+                <LogoImage src={ logo } />
+            </Logo>
 
             <ActionButtons>
-                <IoMenu />
-                <IoCartSharp />
+                <IoMenu onClick={()=> setShowWindow(true)} />
+                <IoCartSharp onClick={() => navigate('/shopcart')} />
             </ActionButtons>
         </NavBar>
     );

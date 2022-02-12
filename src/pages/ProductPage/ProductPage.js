@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "../../components/Header";
+import { Header } from "../../components/Header/Header";
+import OptionsWindow from "../../components/OptionsWindow";
+import UserContext from "../../contexts/UserContext";
 import { addProductToCart, getProductById } from "../../services/galeriaQuadros";
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
@@ -10,13 +12,14 @@ import { CartButton, ProductImage, ProductName, ProductPresentationCard, Product
 export function ProductPage() {
     const { idProduct } = useParams();
     const navigate = useNavigate();
-    const token = 1//useContext(UserContext);
+    const token = useContext(UserContext);
 
 
     const [product, setProduct] = useState(null);
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);
     const [messageError, setMessageError] = useState(false);
+    const [showWindow, setShowWindow] = useState(false);
 
     useEffect(() => {
         getProductById(idProduct)
@@ -60,7 +63,8 @@ export function ProductPage() {
 
     return (
         <PageContainer>
-            <Header />
+            <Header setShowWindow={setShowWindow} />
+            {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
             {
                 product ?
                     <>

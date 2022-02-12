@@ -38,6 +38,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: #F8F7F3;
 }
 
 /* A elements that don't have a class get default styles */
@@ -88,7 +89,7 @@ select {
     font-family: 'Montserrat', sans-serif;
   }
   .root{
-    background-color: #E5E5E5;
+    background-color: #F8F7F3;
     width: 100%;
     display: flex;
     justify-content: center;
