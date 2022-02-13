@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "../../components/Header";
+import { Header } from "../../components/Header/Header.js";
 import { addProductToCart, getProductById } from "../../services/galeriaQuadros";
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";

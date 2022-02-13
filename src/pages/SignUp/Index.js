@@ -23,7 +23,7 @@ export default function SignUp() {
   const BASE_URL = "http://localhost:5000";
 
   function signUp(formData) {
-    const promise = axios.post(`${BASE_URL}/auth/sign-up`, formData);
+    const promise = axios.post(`${BASE_URL}/signup`, formData);
     return promise;
   }
 

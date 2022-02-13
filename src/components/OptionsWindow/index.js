@@ -1,14 +1,16 @@
 import styled from "styled-components";
 import { FaUserAlt } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 export default function OptionsWindow({setShowWindow}){
+  const navigate = useNavigate();
   return(
     <>
       <Container onClick={()=> setShowWindow(false)}></Container>
       <Window>
         <div>
           <FaUserAlt/>
-          <p>Faça seu login</p>
+          <p onClick={()=> navigate("/login")}>Faça seu login</p>
         </div>
       </Window>
     </>
