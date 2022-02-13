@@ -26,8 +26,19 @@ function findProductsInShoppingCart({ token}) {
     return promise;
 }
 
+function removeProductFromCart({ idProduct, token}) {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    const promise = axios.delete(`${api}/shopcart/${ idProduct }`, config);
+    return promise;
+}
+
 export {
     getProductById,
     addProductToCart,
     findProductsInShoppingCart,
+    removeProductFromCart,
 };

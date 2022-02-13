@@ -3,17 +3,21 @@ import { ProductName, ProductPrice } from "../../styles/ProductInfoStyle";
 import { ProductCard, ProductImage } from "../../styles/ShopcartStyle";
 
 export function ProductInfo({
-        imageUrl,
-        name,
-        price,
-    }) {
+    id,
+    imageUrl,
+    name,
+    price,
+    removeProduct,
+}) {
+
+    
     
     return (
             <ProductCard>
                 <ProductImage src={ imageUrl } />
                 <ProductName>{ name }</ProductName>
                 <ProductPrice>{ price }</ProductPrice>
-                <IoTrashBinSharp />
+                <IoTrashBinSharp onClick={() => removeProduct({ id })} />
             </ProductCard>
     );
 }
