@@ -9,7 +9,7 @@ const ProductPresentationCard = styled.div`
     justify-content: center;
     align-items: center;
 
-    background-color: #BAAF98;
+    background-color: #E7E8E3;
     border-radius: 15px;
 
     margin: 0 auto;
@@ -26,7 +26,7 @@ const ProductImage = styled.img`
 `;
 
 const ProductName = styled.h2`
-    color: #272A14;
+    color: #252525;
     font-size: 24px;
 
     margin-top: 5px;
@@ -43,11 +43,11 @@ const CartButton = styled.button`
     width: 70vw;
     height: 48px;
 
-    color: #272A14;
+    color: #252525;
     font-size: 20px;
     text-align: center;
 
-    background-color: #E3E4DF;
+    background-color: #D2CAC0;
     border-radius: 15px;
 
     margin-top: 10px;

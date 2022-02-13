@@ -4,7 +4,7 @@ const Modal = styled.div`
     width: 100vw;
     height: 100vh;
 
-    background-color: rgba(212, 207, 188, 0.6);
+    background-color: rgba(248, 247, 243, 0.6);
 
     display: flex;
     justify-content: center;
@@ -21,7 +21,7 @@ const Message = styled.div`
     min-width: 50vw;
     max-width: 90vw;
     min-height: 50vw;
-    max-height: 40vh;
+    max-height: 50vh;
 
     display: flex;
     flex-direction: column;
@@ -29,17 +29,20 @@ const Message = styled.div`
     align-items: center;
 
     background-color: #E7E8E3;
-    border: 2px solid #7B7363;
+    border: 2px solid #252525;
     border-radius: 10px;
 
     box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.15);
 
     transition: all 0.4s ease 0, 3s;
 
+    margin-top: 100px;
     padding: 20px;
 
+    z-index: 100000;
+
     h1 {
-        color: #272A14;
+        color: #252525;
         font-size: 26px;
         text-align: center;
 
@@ -48,15 +51,16 @@ const Message = styled.div`
 `;
 
 const ButtonModal = styled.button`
-
+    all: unset;
     width: 20vw;
 
-    color: #ffffff;
+    color: #F8F7F3;
     font-size: 36px;
     line-height: 42px;
     font-weight: bold;
+    text-align: center;
 
-    background-color:  #BAAF98;
+    background-color:  #252525;
     border-radius: 5px;
 
     cursor: pointer;
