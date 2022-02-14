@@ -10,12 +10,8 @@ import ModalSuccess from "../../shared/ModalSuccess";
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
 
 export default function Login() {
-    const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ email: "", password: "" });
-    const [loading, setLoading] = useState(false);
     const { setUser, setToken } = useContext(UserContext);
-    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
