@@ -1,27 +1,63 @@
 import styled from "styled-components";
 import { FaUserAlt } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
+import { IconContext } from "react-icons/lib";
+import { AiOutlineExport } from 'react-icons/ai';
+import { logOutPromise } from "../../services/galeriaQuadros";
 
 export default function OptionsWindow({setShowWindow}){
+  const {token, user, setToken, setUser} = useContext(UserContext);
+  
   const navigate = useNavigate();
+
+  function handleLogOut(){
+    const promise = logOutPromise(token);
+    promise.then(()=>{
+      localStorage.removeItem("nameGQ");
+      localStorage.removeItem("emailGQ");
+      localStorage.removeItem("tokenGQ");
+      setToken(null);
+      setUser(null);
+      alert("foi");
+      navigate("/");
+    });
+    promise.catch((err)=>{
+      console.log(err);
+      alert("erro");
+    });
+  }
+  
   return(
-    <>
+    <IconContext.Provider value={{className: "react-icons"}}>
       <Container onClick={()=> setShowWindow(false)}></Container>
       <Window>
         <div>
           <FaUserAlt/>
-          <p onClick={()=> navigate("/login")}>Faça seu login</p>
+            {(token)? 
+            <p>{user.name}</p> : 
+            <p onClick={()=> navigate("/login")}>Faça seu login</p>}
+          
         </div>
+        {(token)?
+          <div onClick={handleLogOut}>
+            <AiOutlineExport/>
+            <p>Sair</p>
+          </div>:
+        ""}
       </Window>
-    </>
+    </IconContext.Provider>
   );
 }
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
-  background-color:#000000;
-  opacity: 0.5;
+  filter: blur(10px);
+
+  background-color:#D2CAC0;
+  opacity: 0.7;
 
   position: absolute;
   top: 0px;
@@ -30,20 +66,33 @@ const Container = styled.div`
 `;
 const Window = styled.div`
   width: 250px;
-  height: 100%;
-
+  height: 150px;
   position: absolute;
   top:0;
   left:0;
   z-index: 3;
 
-  background-color: #E7E8E3;
+  background-color: #252525;
 
   div:nth-child(1){
     width:100%;
     height: 70px;
+    color: #252525;
+    background-color: #F8F7F3;
+
+    padding: 10px;
+
+    font-size: 20px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+  }
+  div:nth-child(2){
+    width:100%;
+    height: 70px;
     color: #F8F7F3;
-    background-color: #252525;
 
     padding: 10px;
 

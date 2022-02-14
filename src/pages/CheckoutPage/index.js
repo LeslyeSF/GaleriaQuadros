@@ -1,60 +1,65 @@
 import axios from "axios";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import {Header} from "../../components/Header/Header.js";
+import UserContext from "../../contexts/UserContext";
+import { checkout } from "../../services/galeriaQuadros.js";
 import {CheckoutScreen, OptionContainer, Option, Title, Value, Amount, ButtonCheckout} from "./style";
 
 export default function CheckoutPage(){
+  const {productSelected, token} = useContext(UserContext);
+  const [products, setProducts] = useState({
+    list:[],
+    amount: 0
+  });
+  const navigate = useNavigate();
+  
+
+  useEffect(()=>{
+    let list=[], amount = 0;
+    list = productSelected?.map((date, index)=>{
+      amount += parseFloat(date.price);
+      return(
+        <Option key={index}>
+          <img src={date.imageUrl} alt={date.name}/>
+          <div>
+            <span>{date.name}</span>
+            <p>{date.artistName}</p>
+          </div>
+          <div>
+            <p>valor:</p>
+            <Value>{date.price}</Value>
+          </div>
+        </Option>
+      );
+    });
+    setProducts({
+      list: list,
+      amount: amount
+    });
+  },[]);
+
   function handleCheckout(){
-    const body = {
-      products:[],
-      amount: "sssss"
-     };
-     const config = {};
-    const promise = axios.post("http://localhost:5000/checkout", body, config);
+    const body = {...products};
+    const promise = checkout(body,token);
+    promise.then(()=>{
+      alert("deu certo");
+      navigate("/");
+    });
+    promise.catch(()=>{
+      alert("falhou");
+    });
   }
   return(
     <CheckoutScreen>
-      <Header></Header>
-      <Navbar></Navbar>
+      <Header/>
       <Title>Finalize seu pedido</Title>
       <OptionContainer>
-        <Option>
-          <img src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2020/06/legiao_Rlt4ezbJ6X73.png.jpeg" alt="c"/>
-          <div>
-            <span>Tituloooooo</span>
-            <p>autor</p>
-          </div>
-          <div>
-            <p>valor:</p>
-            <Value>100000</Value>
-          </div>
-        </Option>
-        <Option>
-          <img src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2020/06/legiao_Rlt4ezbJ6X73.png.jpeg" alt="c"/>
-          <div>
-            <span>Tituloooooo</span>
-            <p>autor</p>
-          </div>
-          <div>
-            <p>valor:</p>
-            <Value>100000</Value>
-          </div>
-        </Option>
-        <Option>
-          <img src="https://kanto.legiaodosherois.com.br/w760-h398-gnw-cfill-q80/wp-content/uploads/2020/06/legiao_Rlt4ezbJ6X73.png.jpeg" alt="c"/>
-          <div>
-            <span>Tituloooooo</span>
-            <p>autor</p>
-          </div>
-          <div>
-            <div>valor:</div>
-            <Value>100000</Value>
-          </div>
-        </Option>
+        {products.list}
       </OptionContainer>
       <Amount>
         <p>Valor total da compra:</p>
-        <Value>100000</Value>
+        <Value>{products.amount}</Value>
       </Amount>
       <ButtonCheckout onClick={handleCheckout}>Finalizar Compra</ButtonCheckout>
     </CheckoutScreen>

@@ -8,7 +8,9 @@ const PageContainer = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+
     margin: 200px auto 0;
+    padding-bottom: 30px;
 `;
 
 export {

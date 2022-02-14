@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {HomeScreen, Carousel, OptionContainer, Option, Title} from "./style";
-import Header from "../../components/Header";
-import Navbar from "../../components/Navbar";
+import {Header} from "../../components/Header/Header.js";
 import { useNavigate } from "react-router";
 import React from "react";
 import SlideShow from "../../components/SlideShow";
-import OptionsWindow from "../../components/OptionsWindow";
 import { getData } from "../../services/galeriaQuadros";
+import UserContext from "../../contexts/UserContext";
+import { tokenVerifyLocalStorage } from "../../services/tokenService";
 
 
 export default function HomePage(){
   const [frames, setFrames] = useState("");
   const [slide, setSlide] = useState("");
-  const [showWindow, setShowWindow] = useState(false);
+  const {user, setToken, setUser} = useContext(UserContext);
+  console.log(user);
   const navigate = useNavigate();
   useEffect(()=>{
+    tokenVerifyLocalStorage(navigate, setToken, setUser);
     const promise = getData();
     promise.then((ans)=>{
       
@@ -53,10 +55,7 @@ export default function HomePage(){
   
   return(
     <HomeScreen>
-      <Header>
-      </Header>
-      <Navbar setShowWindow={setShowWindow}/>
-      {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
+      <Header/>
       <Carousel>
         <div>
           <SlideShow slides={slide}/>
