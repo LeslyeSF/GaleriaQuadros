@@ -40,7 +40,6 @@ export function ProductPage() {
     }, [idProduct, navigate]);
     
     function addToCart({ idProduct, token }) {
-        console.log({ idProduct, token });
         addProductToCart({ idProduct, token })
             .then((res) => {
                 setMessage('Produto adicionado ao carrinho')
@@ -66,7 +65,6 @@ export function ProductPage() {
                 }
             })
     }
-    console.log(token);
 
     return (
         <PageContainer>

@@ -55,7 +55,6 @@ export function ShopcartPage() {
                 }
         });
     }, [navigate])
-    console.log(products[0]?._id);
 
     return (
         <PageContainer>
