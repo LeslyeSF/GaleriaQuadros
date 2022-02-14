@@ -8,7 +8,7 @@ const SearchContainer = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
 
   .react-icons{
     color: #252525;

@@ -12,7 +12,7 @@ import { CartButton, ProductImage, ProductName, ProductPresentationCard, Product
 export function ProductPage() {
     const { idProduct } = useParams();
     const navigate = useNavigate();
-    const token = useContext(UserContext);
+    const {token} = useContext(UserContext);
 
 
     const [product, setProduct] = useState(null);
@@ -69,9 +69,9 @@ export function ProductPage() {
                 product ?
                     <>
                         <ProductPresentationCard>
-                            <ProductImage src='https://images.unsplash.com/photo-1644433441297-66f97625a279?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1413&q=80' />
-                            <ProductName>{ product.name }</ProductName>
-                            <ProductPrice>{ product.price }</ProductPrice>
+                            <ProductImage src={product.linkImg} />
+                            <ProductName>{ product.title }</ProductName>
+                            <ProductPrice>{ product.value }</ProductPrice>
                         </ProductPresentationCard>
                         
                         <CartButton onClick={ () => {addToCart({ idProduct, token })} }>Adicionar no carrinho</CartButton>

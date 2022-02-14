@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import OptionsWindow from "../../components/OptionsWindow";
 import { ProductInfo } from "../../components/ProductInfo/ProductInfo";
+import UserContext from "../../contexts/UserContext";
 
 import { findProductsInShoppingCart, removeProductFromCart } from "../../services/galeriaQuadros";
 import ModalError from "../../shared/ModalError";
@@ -13,7 +14,9 @@ import { ProductsCardInfo } from "../../styles/ShopcartStyle";
 
 export function ShopcartPage() {
     const navigate = useNavigate();
-    const token = 1//useContext(UserContext);
+    const {token} = useContext(UserContext);
+    const {setProductSelected} = useContext(UserContext);
+
 
     const [modalError, setModalError] = useState(false);
     const [messageError, setMessageError] = useState(false);
@@ -52,6 +55,7 @@ export function ShopcartPage() {
             .catch((err) => console.error());
     }, [products])
 
+
     function removeProduct({ id }) {
         removeProductFromCart({ idProduct: id, token})
             .then((res) => setProducts(res.data))
@@ -59,6 +63,11 @@ export function ShopcartPage() {
                 setMessageError('Erro, tente novamente mais tarde')
                 setModalError(true)
             });
+    }
+
+    function handleCheckout(){
+        setProductSelected(products);
+        navigate('/checkout');
     }
 
     return (
@@ -77,7 +86,9 @@ export function ShopcartPage() {
                             }
                             
                         </ProductsCardInfo>
-                        <CartButton onClick={ () => {navigate('/checkout')} }>Finalizar pedido</CartButton>
+
+                        <CartButton onClick={ handleCheckout }>Finalizar pedido</CartButton>
+
                     </>
                 :   <ProductName> Não há produtos no carrinho </ProductName>
             }

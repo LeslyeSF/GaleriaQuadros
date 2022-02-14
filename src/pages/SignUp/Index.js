@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Button, BDiv } from "./Style";
 import { CgMenu, CgShoppingCart } from "react-icons/cg";
 
 import axios from "axios";
+import { tokenVerifyLocalStorage } from "../../services/tokenService";
+import UserContext from "../../contexts/UserContext";
 
 export default function SignUp() {
   const navigate = useNavigate();
+  const {setToken} = useContext(UserContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,6 +17,8 @@ export default function SignUp() {
   });
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => tokenVerifyLocalStorage(navigate, setToken) ,[]);
 
   function handleInputChange(e) {
     formData[e.target.name] = e.target.value;
@@ -37,7 +42,7 @@ export default function SignUp() {
     const promise = signUp(formData);
     promise.then(() => {
       setLoading(false);
-      navigate("/");
+      navigate("/login");
     });
     promise.catch((error) => {
       alert(error);
@@ -85,7 +90,7 @@ export default function SignUp() {
           name="confirm-password"
         />
         <BDiv>
-          <Button disabled={loading}>Cadsolafghpçijdfshgljhdsaflghdlaçsfhldfgjastrar</Button>
+          <Button disabled={loading}>Cadastrar</Button>
         </BDiv>
       </form>
       <Link to="/login">Já tem uma conta? Clique aqui para logar</Link>

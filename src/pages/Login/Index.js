@@ -4,11 +4,12 @@ import { Container, Button, BDiv } from "./Style";
 import { CgMenu, CgShoppingCart } from "react-icons/cg";
 import UserContext from "../../contexts/UserContext";
 import axios from "axios";
+import { tokenVerifyLocalStorage } from "../../services/tokenService";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { setUser, setToken } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleInputChange(e) {
@@ -16,11 +17,7 @@ export default function Login() {
     setFormData({ ...formData });
   }
 
-  useEffect(() => {
-    if (user !== null) {
-      navigate("/");
-    }
-  });
+  useEffect(() => tokenVerifyLocalStorage(navigate, setToken, setUser) ,[]);
 
   const BASE_URL = "http://localhost:5000";
   function logIn(formData) {
@@ -33,10 +30,14 @@ export default function Login() {
     setLoading(true);
     const promise = logIn(formData);
     promise.then((response) => {
-      setUser(response.data);
+      setUser(response.data.user);
+      setToken(response.data.token);
       localStorage.setItem("last-user", JSON.stringify(response.data));
       setLoading(false);
-      navigate("/account");
+      navigate("/");
+      localStorage.setItem("tokenGQ", response.data.token);
+      localStorage.setItem("nameGQ", response.data.user.name);
+      localStorage.setItem("emailGQ", response.data.user.email);
     });
     promise.catch((error) => {
       alert(error);

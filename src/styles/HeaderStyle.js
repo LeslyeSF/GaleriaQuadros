@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const NavBar = styled.header`
     width: 100vw;
-    min-height: 170px;
+    min-height: 100px;
 
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@ const NavBar = styled.header`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1;
 `;
 
 const Logo = styled.div`
