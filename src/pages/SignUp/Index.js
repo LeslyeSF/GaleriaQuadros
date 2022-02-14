@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Container, Button, BDiv, Input } from "./Style";
-import { CgMenu, CgShoppingCart } from "react-icons/cg";
+import { Container, Button, BDiv, Input, Title } from "./Style";
+import {Header} from "../../components/Header/Header";
 
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
 import UserContext from "../../contexts/UserContext";
-
-import axios from "axios";
+import { signUp } from "../../services/galeriaQuadros";
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
@@ -46,12 +45,7 @@ export default function SignUp() {
         setFormData({ ...formData });
     }
 
-    const BASE_URL = "https://galeria-quadros.herokuapp.com";
-
-    function signUp(formData) {
-        const promise = axios.post(`${BASE_URL}/signup`, formData);
-        return promise;
-    }
+    
 
     async function handleSignUp(e) {
         e.preventDefault();
@@ -99,10 +93,8 @@ export default function SignUp() {
 
     return (
         <Container>
-            <nav>
-                <CgMenu />
-                <CgShoppingCart />
-            </nav>
+            <Header/>
+            <Title>Cadastro</Title>
             <form on onSubmit={handleSignUp}>
                 <Input
                     disabled={loading}
@@ -142,7 +134,9 @@ export default function SignUp() {
                     <Button disabled={loading}>Cadastrar</Button>
                 </BDiv>
             </form>
-            <Link to="/login">Já tem uma conta? Clique aqui para logar</Link>
+            <Link to="/login">
+                <p>Já tem uma conta?<br/>Clique aqui para logar</p>
+            </Link>
 
                 {
                     modalError ?

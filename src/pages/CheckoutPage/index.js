@@ -64,7 +64,7 @@ export default function CheckoutPage(){
       </OptionContainer>
       <Amount>
         <p>Valor total da compra:</p>
-        <Value>{products.amount}</Value>
+        <Value>{products.amount.toFixed(2)}</Value>
       </Amount>
       <ButtonCheckout onClick={handleCheckout}>Finalizar Compra</ButtonCheckout>
     </CheckoutScreen>

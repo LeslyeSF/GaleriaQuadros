@@ -1,13 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Container, Button, BDiv } from "./Style";
-import { CgMenu, CgShoppingCart } from "react-icons/cg";
+import { Container, Button, BDiv, Title } from "./Style";
+import {Header} from "../../components/Header/Header";
 import UserContext from "../../contexts/UserContext";
-import axios from "axios";
+
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
+import { logIn } from "../../services/galeriaQuadros";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -27,11 +28,7 @@ export default function Login() {
         setFormData({ ...formData });
     }
 
-    const BASE_URL = "https://galeria-quadros.herokuapp.com";
-    function logIn(formData) {
-        const promise = axios.post(`${BASE_URL}/login`, formData);
-        return promise;
-    }
+    
 
     function handleLogin(e) {
         e.preventDefault();
@@ -82,10 +79,8 @@ export default function Login() {
 
     return (
         <Container>
-            <nav>
-                <CgMenu />
-                <CgShoppingCart />
-            </nav>
+            <Header/>
+            <Title>Login</Title>
             <form on onSubmit={handleLogin}>
                 <input
                     disabled={loading}
@@ -108,7 +103,7 @@ export default function Login() {
                 </BDiv>
             </form>
             <Link to="/signup">
-                Ainda não tem uma conta? Clique aqui para se cadastrar
+                <p>Ainda não tem uma conta? <br/>Clique aqui para se cadastrar</p>
             </Link>
 
             {
