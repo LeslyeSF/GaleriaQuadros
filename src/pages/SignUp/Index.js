@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Button, BDiv, Input } from "./Style";
-import { CgMenu, CgShoppingCart } from "react-icons/cg";
 
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
 import UserContext from "../../contexts/UserContext";
@@ -10,6 +9,8 @@ import axios from "axios";
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
+import { Header } from "../../components/Header/Header";
+import OptionsWindow from "../../components/OptionsWindow";
 
 export default function SignUp() {
     const navigate = useNavigate();
@@ -26,6 +27,8 @@ export default function SignUp() {
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);
     const [message, setMessage] = useState(false);
+
+    const [showWindow, setShowWindow] = useState(false);
 
     useEffect(() => {
         if (formData.password !== confirmPassword) {
@@ -98,63 +101,65 @@ export default function SignUp() {
     }
 
     return (
-        <Container>
-            <nav>
-                <CgMenu />
-                <CgShoppingCart />
-            </nav>
-            <form on onSubmit={handleSignUp}>
-                <Input
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.name}
-                    type="Text"
-                    placeholder="Nome"
-                    name="name"
-                />
-                <Input
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.email}
-                    type="email"
-                    placeholder="E-mail"
-                    name="email"
-                />
-                <Input
-                    compare={compare}
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.password}
-                    type="password"
-                    placeholder="Senha"
-                    name="password"
-                />
-                <Input
-                    compare={compare}
-                    disabled={loading}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    value={confirmPassword}
-                    type="password"
-                    placeholder="Confirme a senha"
-                    name="confirm-password"
-                />
-                <BDiv>
-                    <Button disabled={loading}>Cadastrar</Button>
-                </BDiv>
-            </form>
-            <Link to="/login">Já tem uma conta? Clique aqui para logar</Link>
+        <>
+            <Header setShowWindow={setShowWindow} />
+            {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
+            <Container>
+                <form on onSubmit={handleSignUp}>
+                    <Input
+                        compare={true}
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.name}
+                        type="Text"
+                        placeholder="Nome"
+                        name="name"
+                    />
+                    <Input
+                        compare={true}
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.email}
+                        type="email"
+                        placeholder="E-mail"
+                        name="email"
+                    />
+                    <Input
+                        compare={compare}
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.password}
+                        type="password"
+                        placeholder="Senha"
+                        name="password"
+                    />
+                    <Input
+                        compare={compare}
+                        disabled={loading}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={confirmPassword}
+                        type="password"
+                        placeholder="Confirme a senha"
+                        name="confirm-password"
+                    />
+                    <BDiv>
+                        <Button disabled={loading}>Cadastrar</Button>
+                    </BDiv>
+                </form>
+                <Link to="/login">Já tem uma conta? Clique aqui para logar</Link>
 
-                {
-                    modalError ?
-                        <ModalError message={ message } setModal={ setModalError } />
-                    : ''
-                }
+                    {
+                        modalError ?
+                            <ModalError message={ message } setModal={ setModalError } />
+                        : ''
+                    }
 
-                {
-                    modalSuccess ?
-                        <ModalSuccess message={message} />
-                    : ''
-                }
-        </Container>
-  );
+                    {
+                        modalSuccess ?
+                            <ModalSuccess message={message} />
+                        : ''
+                    }
+            </Container>
+        </>
+    );
 }

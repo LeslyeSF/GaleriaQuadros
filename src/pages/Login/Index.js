@@ -1,13 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Button, BDiv } from "./Style";
-import { CgMenu, CgShoppingCart } from "react-icons/cg";
 import UserContext from "../../contexts/UserContext";
 import axios from "axios";
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
+import { Header } from "../../components/Header/Header";
+import OptionsWindow from "../../components/OptionsWindow";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function Login() {
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);
     const [messageError, setMessageError] = useState(false);
+
+    const [showWindow, setShowWindow] = useState(false);
 
     useEffect(() => tokenVerifyLocalStorage(navigate, setToken, setUser) ,[]);
 
@@ -81,47 +84,47 @@ export default function Login() {
     }
 
     return (
-        <Container>
-            <nav>
-                <CgMenu />
-                <CgShoppingCart />
-            </nav>
-            <form on onSubmit={handleLogin}>
-                <input
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.email}
-                    type="email"
-                    placeholder="E-mail"
-                    name="email"
-                />
-                <input
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.password}
-                    type="password"
-                    placeholder="Senha"
-                    name="password"
-                />
-                <BDiv>
-                    <Button disabled={loading}>Entrar</Button>
-                </BDiv>
-            </form>
-            <Link to="/signup">
-                Ainda não tem uma conta? Clique aqui para se cadastrar
-            </Link>
+        <>
+            <Header setShowWindow={setShowWindow} />
+            {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
+            <Container>
+                <form on onSubmit={handleLogin}>
+                    <input
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.email}
+                        type="email"
+                        placeholder="E-mail"
+                        name="email"
+                    />
+                    <input
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.password}
+                        type="password"
+                        placeholder="Senha"
+                        name="password"
+                    />
+                    <BDiv>
+                        <Button disabled={loading}>Entrar</Button>
+                    </BDiv>
+                </form>
+                <Link to="/signup">
+                    Ainda não tem uma conta? Clique aqui para se cadastrar
+                </Link>
 
-            {
-                modalError ?
-                    <ModalError message={ messageError } setModal={ setModalError } />
-                : ''
-            }
+                {
+                    modalError ?
+                        <ModalError message={ messageError } setModal={ setModalError } />
+                    : ''
+                }
 
-            {
-                modalSuccess ?
-                    <ModalSuccess />
-                : ''
-            }
-        </Container>
+                {
+                    modalSuccess ?
+                        <ModalSuccess message='' />
+                    : ''
+                }
+            </Container>
+        </>
     );
 }

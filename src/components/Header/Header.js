@@ -1,14 +1,9 @@
-import { ActionButtons, Logo, LogoImage, NavBar } from "../../styles/HeaderStyle";
-import { IoMenu, IoCartSharp } from 'react-icons/io5'
+import { Logo, LogoImage, NavBar } from "../../styles/HeaderStyle";
 import { useNavigate } from "react-router-dom";
 import logo from '../../styles/logo-removebg-preview.png'
 import NavbarOptions from "../NavbarOptions";
 
-export function Header() {
-
-
 export function Header({ setShowWindow }) {
-
     const navigate = useNavigate();
     return (
         <NavBar>

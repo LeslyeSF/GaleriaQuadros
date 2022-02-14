@@ -7,6 +7,7 @@ import { ProductInfo } from "../../components/ProductInfo/ProductInfo";
 import UserContext from "../../contexts/UserContext";
 
 import { findProductsInShoppingCart, removeProductFromCart } from "../../services/galeriaQuadros";
+import { tokenVerifyLocalStorage } from "../../services/tokenService";
 import ModalError from "../../shared/ModalError";
 
 import { PageContainer } from "../../styles/ContainerStyle";
@@ -15,7 +16,7 @@ import { ProductsCardInfo } from "../../styles/ShopcartStyle";
 
 export function ShopcartPage() {
     const navigate = useNavigate();
-    const {token} = useContext(UserContext);
+    const { setUser, token, setToken } = useContext(UserContext);
     const {setProductSelected} = useContext(UserContext);
 
     const [modalError, setModalError] = useState(false);
@@ -38,6 +39,7 @@ export function ShopcartPage() {
     }, [token]);
 
     useEffect(() => {
+        tokenVerifyLocalStorage(navigate, setToken, setUser);
         findProductsInShoppingCart({ token })
             .then((res) => setProducts([...res.data]))
             .catch((err) => {
@@ -57,7 +59,7 @@ export function ShopcartPage() {
                     }, 2000)
                 }
         });
-    }, [navigate, token])
+    }, [navigate, setToken, setUser, token])
 
     function handleCheckout(){
         setProductSelected(products);
@@ -81,12 +83,12 @@ export function ShopcartPage() {
                             
                         </ProductsCardInfo>
 
-                        <CartButton onClick={ handleCheckout }>Finalizar pedido</CartButton>
+                        <CartButton onClick={ () => handleCheckout() }>Finalizar pedido</CartButton>
 
                     </>
                 :   <ProductName> Não há produtos no carrinho </ProductName>
             }
-            <CartButton onClick={ () => {navigate('/')} }>Continuar comprando</CartButton>
+            <CartButton onClick={ () => navigate('/') }>Continuar comprando</CartButton>
 
             {
                 modalError ?
