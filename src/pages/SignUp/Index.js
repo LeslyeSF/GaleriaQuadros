@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Button, BDiv, Input } from "./Style";
 import { CgMenu, CgShoppingCart } from "react-icons/cg";
 
+import { tokenVerifyLocalStorage } from "../../services/tokenService";
+import UserContext from "../../contexts/UserContext";
+
 import axios from "axios";
+
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
 
 export default function SignUp() {
     const navigate = useNavigate();
+    const {setToken} = useContext(UserContext);
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -28,7 +33,13 @@ export default function SignUp() {
         } else {
             setCompare(true);
         }
-    }, [formData, confirmPassword, compare]);
+        tokenVerifyLocalStorage(navigate, setToken)
+    } ,[formData, confirmPassword, compare]);
+
+    function handleInputChange(e) {
+        formData[e.target.name] = e.target.value;
+        setFormData({ ...formData });
+    }
 
     function handleInputChange(e) {
         formData[e.target.name] = e.target.value;
@@ -128,22 +139,22 @@ export default function SignUp() {
                     name="confirm-password"
                 />
                 <BDiv>
-                <Button disabled={loading}>Cadastrar</Button>
+                    <Button disabled={loading}>Cadastrar</Button>
                 </BDiv>
             </form>
             <Link to="/login">Já tem uma conta? Clique aqui para logar</Link>
 
-            {
-                modalError ?
-                    <ModalError message={ message } setModal={ setModalError } />
-                : ''
-            }
+                {
+                    modalError ?
+                        <ModalError message={ message } setModal={ setModalError } />
+                    : ''
+                }
 
-            {
-                modalSuccess ?
-                    <ModalSuccess message={message} />
-                : ''
-            }
+                {
+                    modalSuccess ?
+                        <ModalSuccess message={message} />
+                    : ''
+                }
         </Container>
-    );
+  );
 }

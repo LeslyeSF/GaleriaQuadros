@@ -4,11 +4,17 @@ import { Container, Button, BDiv } from "./Style";
 import { CgMenu, CgShoppingCart } from "react-icons/cg";
 import UserContext from "../../contexts/UserContext";
 import axios from "axios";
+
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
+import { tokenVerifyLocalStorage } from "../../services/tokenService";
 
 export default function Login() {
     const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [loading, setLoading] = useState(false);
+    const { setUser, setToken } = useContext(UserContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -17,18 +23,13 @@ export default function Login() {
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);
     const [messageError, setMessageError] = useState(false);
-    
+
+    useEffect(() => tokenVerifyLocalStorage(navigate, setToken, setUser) ,[]);
 
     function handleInputChange(e) {
         formData[e.target.name] = e.target.value;
         setFormData({ ...formData });
     }
-
-    useEffect(() => {
-        if (user !== null) {
-        navigate("/");
-        }
-    });
 
     const BASE_URL = "http://localhost:5000";
     function logIn(formData) {
@@ -41,8 +42,14 @@ export default function Login() {
         setLoading(true);
         const promise = logIn(formData);
         promise.then((response) => {
-            setUser(response.data);
+            setUser(response.data.user);
+            setToken(response.data.token);
             localStorage.setItem("last-user", JSON.stringify(response.data));
+
+            localStorage.setItem("tokenGQ", response.data.token);
+            localStorage.setItem("nameGQ", response.data.user.name);
+            localStorage.setItem("emailGQ", response.data.user.email);
+
             setLoading(false);
             setModalSuccess(true)
             

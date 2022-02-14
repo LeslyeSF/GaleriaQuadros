@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import OptionsWindow from "../../components/OptionsWindow";
 import { ProductInfo } from "../../components/ProductInfo/ProductInfo";
+import UserContext from "../../contexts/UserContext";
 
 import { findProductsInShoppingCart, removeProductFromCart } from "../../services/galeriaQuadros";
 import ModalError from "../../shared/ModalError";
@@ -13,7 +15,8 @@ import { ProductsCardInfo } from "../../styles/ShopcartStyle";
 
 export function ShopcartPage() {
     const navigate = useNavigate();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiI2MjA3ZDNjMTdhNDI4NTRjZTFmY2FjOTgiLCJpYXQiOjE2NDQ4MzU5MDEsImV4cCI6MTY0NTAwODcwMX0.hzIlAL9nkYiCqLB7VVzhB_0Wfi67OkiNA44O_Ph79is' //useContext(UserContext);
+    const {token} = useContext(UserContext);
+    const {setProductSelected} = useContext(UserContext);
 
     const [modalError, setModalError] = useState(false);
     const [messageError, setMessageError] = useState(false);
@@ -32,7 +35,7 @@ export function ShopcartPage() {
                 setMessageError('Erro, tente novamente mais tarde')
                 setModalError(true)
             });
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         findProductsInShoppingCart({ token })
@@ -54,7 +57,12 @@ export function ShopcartPage() {
                     }, 2000)
                 }
         });
-    }, [navigate])
+    }, [navigate, token])
+
+    function handleCheckout(){
+        setProductSelected(products);
+        navigate('/checkout');
+    }
 
     return (
         <PageContainer>
@@ -72,7 +80,9 @@ export function ShopcartPage() {
                             }
                             
                         </ProductsCardInfo>
-                        <CartButton onClick={ () => {navigate('/checkout')} }>Finalizar pedido</CartButton>
+
+                        <CartButton onClick={ handleCheckout }>Finalizar pedido</CartButton>
+
                     </>
                 :   <ProductName> Não há produtos no carrinho </ProductName>
             }

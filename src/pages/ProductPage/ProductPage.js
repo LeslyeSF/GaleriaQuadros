@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import OptionsWindow from "../../components/OptionsWindow";
+import UserContext from "../../contexts/UserContext";
 
 import { addProductToCart, getProductById } from "../../services/galeriaQuadros";
 import ModalError from "../../shared/ModalError";
@@ -12,8 +13,8 @@ import { CartButton, ProductImage, ProductName, ProductPresentationCard, Product
 export function ProductPage() {
     const { idProduct } = useParams();
     const navigate = useNavigate();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiI2MjA3ZDNjMTdhNDI4NTRjZTFmY2FjOTgiLCJpYXQiOjE2NDQ4MzU5MDEsImV4cCI6MTY0NTAwODcwMX0.hzIlAL9nkYiCqLB7VVzhB_0Wfi67OkiNA44O_Ph79is' //useContext(UserContext);
 
+    const {token} = useContext(UserContext);
 
     const [product, setProduct] = useState(null);
     const [modalError, setModalError] = useState(false);
