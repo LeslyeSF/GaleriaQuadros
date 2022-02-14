@@ -22,8 +22,7 @@ function addProductToCart({ idProduct, token}) {
         }
     }
 
-    const promise = axios.post(`${api}/shopcart/${ idProduct }`,{},config);
-
+    const promise = axios.post(`${api}/shopcart/${ idProduct }`, {}, config);
     return promise;
 }
 

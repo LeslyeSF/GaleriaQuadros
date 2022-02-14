@@ -17,6 +17,7 @@ const Container = styled.div`
   input {
     width: 303px;
     height: 45px;
+    
     margin-bottom: 6px;
     background: #e7e8e3;
     border: hidden;
@@ -69,4 +70,27 @@ const Button = styled.button`
   margin-bottom: 25px;
 `;
 
-export { Container, Button, BDiv };
+const Input = styled.input`
+    width: 303px;
+    height: 45px;
+
+    color: ${(props) => props.compare ? "#000000" : !props.compare ? "#ff0000" : "#000000"};
+    text-indent: 11px;
+    font-size: 20px;
+    line-height: 25px;
+
+    border-radius: 15px;
+    border: hidden;
+    box-sizing: border-box;
+    background: #e7e8e3;
+    
+    margin-bottom: 27px;
+
+    ::placeholder {
+      color: #252525;
+    }
+
+    outline: 0;
+`
+
+export { Container, Button, BDiv, Input };
