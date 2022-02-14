@@ -15,7 +15,6 @@ export default function App(){
   const [ token, setToken ] = useState(null);
   const [productSelected, setProductSelected] = useState(null);
 
-  console.log(user);
   return(
     <>
     <GlobalStyle/>
