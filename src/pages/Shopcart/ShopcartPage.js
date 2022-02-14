@@ -7,6 +7,7 @@ import { ProductInfo } from "../../components/ProductInfo/ProductInfo";
 import UserContext from "../../contexts/UserContext";
 
 import { findProductsInShoppingCart, removeProductFromCart } from "../../services/galeriaQuadros";
+import { tokenVerify  } from "../../services/tokenService";
 import ModalError from "../../shared/ModalError";
 
 import { PageContainer } from "../../styles/ContainerStyle";
@@ -38,6 +39,7 @@ export function ShopcartPage() {
     }, [token]);
 
     useEffect(() => {
+        tokenVerify(navigate, token);
         findProductsInShoppingCart({ token })
             .then((res) => setProducts([...res.data]))
             .catch((err) => {
