@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import {Header} from "../../components/Header/Header.js";
 import UserContext from "../../contexts/UserContext";
 import { checkout } from "../../services/galeriaQuadros.js";
+import ModalError from "../../shared/ModalError.js";
+import ModalSuccess from "../../shared/ModalSuccess.js";
 import {CheckoutScreen, OptionContainer, Option, Title, Value, Amount, ButtonCheckout} from "./style";
 
 export default function CheckoutPage(){
@@ -12,7 +14,10 @@ export default function CheckoutPage(){
     amount: 0
   });
   const navigate = useNavigate();
-  
+
+  const [modalError, setModalError] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [message, setMessage] = useState(false);  
 
   useEffect(()=>{
     let list=[], amount = 0;
@@ -42,11 +47,15 @@ export default function CheckoutPage(){
     const body = {...products};
     const promise = checkout(body,token);
     promise.then(()=>{
-      alert("deu certo");
-      navigate("/");
+      setMessage('Compra realizada com sucesso');
+      setModalSuccess(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     });
     promise.catch(()=>{
-      alert("falhou");
+      setMessage('Ocorreu um erro, tente mais tarde')
+      setModalError(true);
     });
   }
   return(
@@ -61,6 +70,17 @@ export default function CheckoutPage(){
         <Value>{products.amount}</Value>
       </Amount>
       <ButtonCheckout onClick={handleCheckout}>Finalizar Compra</ButtonCheckout>
+      {
+        modalError ?
+          <ModalError message={ message } setModal={ setModalError } />
+        : ''
+      }
+
+      {
+        modalSuccess ?
+          <ModalSuccess message={ message } />
+        : ''
+      }
     </CheckoutScreen>
   );
 }

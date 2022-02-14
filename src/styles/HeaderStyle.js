@@ -37,7 +37,7 @@ const Logo = styled.div`
 `;
 
 const LogoImage = styled.img`
-    width: 250px;
+    width: 240px;
     height: 100px;
 
     text-align: center;

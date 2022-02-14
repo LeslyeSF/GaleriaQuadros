@@ -7,8 +7,8 @@ import { ProductInfo } from "../../components/ProductInfo/ProductInfo";
 import UserContext from "../../contexts/UserContext";
 
 import { findProductsInShoppingCart, removeProductFromCart } from "../../services/galeriaQuadros";
-import { tokenVerifyLocalStorage } from "../../services/tokenService";
 import ModalError from "../../shared/ModalError";
+import { tokenVerify  } from "../../services/tokenService";
 
 import { PageContainer } from "../../styles/ContainerStyle";
 import { CartButton, ProductName } from "../../styles/ProductInfoStyle";
@@ -16,7 +16,7 @@ import { ProductsCardInfo } from "../../styles/ShopcartStyle";
 
 export function ShopcartPage() {
     const navigate = useNavigate();
-    const { setUser, token, setToken } = useContext(UserContext);
+    const { user, token } = useContext(UserContext);
     const {setProductSelected} = useContext(UserContext);
 
     const [modalError, setModalError] = useState(false);
@@ -39,12 +39,12 @@ export function ShopcartPage() {
     }, [token]);
 
     useEffect(() => {
-        tokenVerifyLocalStorage(navigate, setToken, setUser);
+        tokenVerify(navigate, token);
         findProductsInShoppingCart({ token })
             .then((res) => setProducts([...res.data]))
             .catch((err) => {
                 console.error()
-                if (!token || err.response.status === 401) {
+                if (!user || err.response.status === 401) {
                     setMessageError('Antes, por favor faça login');
                     setModalError(true);
                     setTimeout(() => {
@@ -59,7 +59,7 @@ export function ShopcartPage() {
                     }, 2000)
                 }
         });
-    }, [navigate, setToken, setUser, token])
+    }, [navigate, token, user])
 
     function handleCheckout(){
         setProductSelected(products);
@@ -70,7 +70,6 @@ export function ShopcartPage() {
         <PageContainer>
             <Header setShowWindow={setShowWindow} />
             {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
-            
             {
                 products.length ?
                     <>

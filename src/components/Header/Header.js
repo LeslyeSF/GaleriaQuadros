@@ -1,6 +1,6 @@
 import { Logo, LogoImage, NavBar } from "../../styles/HeaderStyle";
 import { useNavigate } from "react-router-dom";
-import logo from '../../styles/logo-removebg-preview.png'
+import logo from '../../styles/logoQuadros.png'
 import NavbarOptions from "../NavbarOptions";
 
 export function Header({ setShowWindow }) {
