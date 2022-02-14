@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import OptionsWindow from "../../components/OptionsWindow";
@@ -13,53 +13,49 @@ import { ProductsCardInfo } from "../../styles/ShopcartStyle";
 
 export function ShopcartPage() {
     const navigate = useNavigate();
-    const token = 1//useContext(UserContext);
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiI2MjA3ZDNjMTdhNDI4NTRjZTFmY2FjOTgiLCJpYXQiOjE2NDQ4MzU5MDEsImV4cCI6MTY0NTAwODcwMX0.hzIlAL9nkYiCqLB7VVzhB_0Wfi67OkiNA44O_Ph79is' //useContext(UserContext);
 
     const [modalError, setModalError] = useState(false);
     const [messageError, setMessageError] = useState(false);
 
     const [showWindow, setShowWindow] = useState(false);
 
-    const [products, setProducts] = useState([{
-        id: 1,
-        imageUrl: 'https://images.unsplash.com/photo-1644433441297-66f97625a279?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1413&q=80',
-        name:'Arte Tal',
-        price: 3000,
-        artistName: 'Fran',
-    }, {
-        id: 2,
-        imageUrl: 'https://images.unsplash.com/photo-1644433441297-66f97625a279?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1413&q=80',
-        name:'Arte Tal',
-        price: 3000,
-        artistName: 'Fran',
-    }, {
-        id: 3,
-        imageUrl: 'https://images.unsplash.com/photo-1644433441297-66f97625a279?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1413&q=80',
-        name:'Arte Tal',
-        price: 3000,
-        artistName: 'Fran',
-    }, {
-        id: 4,
-        imageUrl: 'https://images.unsplash.com/photo-1644433441297-66f97625a279?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1413&q=80',
-        name:'Arte Tal',
-        price: 3000,
-        artistName: 'Fran',
-    }]);
-
-    useEffect(() => {
-        findProductsInShoppingCart({ token })
-            .then((res) => setProducts(res.data))
-            .catch((err) => console.error());
-    }, [products])
-
-    function removeProduct({ id }) {
+    const [products, setProducts] = useState([]);
+    
+    const removeProduct = useCallback(({ id }) => {
         removeProductFromCart({ idProduct: id, token})
-            .then((res) => setProducts(res.data))
+            .then((res) => setProducts(oldProducts => {
+                oldProducts.filter((prod) => prod._id === id);
+                window.location.reload()
+            }))
             .catch((err) => {
                 setMessageError('Erro, tente novamente mais tarde')
                 setModalError(true)
             });
-    }
+    }, []);
+
+    useEffect(() => {
+        findProductsInShoppingCart({ token })
+            .then((res) => setProducts([...res.data]))
+            .catch((err) => {
+                console.error()
+                if (!token || err.response.status === 401) {
+                    setMessageError('Antes, por favor faça login');
+                    setModalError(true);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 2000);
+                }
+                if (err.response.status === 500) {
+                    setMessageError("Servidor fora de área, tente novamente mais tarde");
+                    setModalError(true);
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 2000)
+                }
+        });
+    }, [navigate])
+    console.log(products[0]?._id);
 
     return (
         <PageContainer>
@@ -72,7 +68,7 @@ export function ShopcartPage() {
                         <ProductsCardInfo>
                             {
                                 products.map((prod, index) => 
-                                    <ProductInfo key={index} id={prod.id} imageUrl={prod.imageUrl} name={prod.name} price={prod.price} removeProduct={removeProduct} />
+                                    <ProductInfo key={index} id={prod._id} imageUrl={prod.linkImg} name={prod.title} price={prod.value} removeProduct={removeProduct} />
                                 )
                             }
                             

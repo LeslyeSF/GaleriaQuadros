@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import OptionsWindow from "../../components/OptionsWindow";
-import UserContext from "../../contexts/UserContext";
+
 import { addProductToCart, getProductById } from "../../services/galeriaQuadros";
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
@@ -12,13 +12,13 @@ import { CartButton, ProductImage, ProductName, ProductPresentationCard, Product
 export function ProductPage() {
     const { idProduct } = useParams();
     const navigate = useNavigate();
-    const token = useContext(UserContext);
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzZXIiOiI2MjA3ZDNjMTdhNDI4NTRjZTFmY2FjOTgiLCJpYXQiOjE2NDQ4MzU5MDEsImV4cCI6MTY0NTAwODcwMX0.hzIlAL9nkYiCqLB7VVzhB_0Wfi67OkiNA44O_Ph79is' //useContext(UserContext);
 
 
     const [product, setProduct] = useState(null);
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);
-    const [messageError, setMessageError] = useState(false);
+    const [message, setMessage] = useState(false);
     const [showWindow, setShowWindow] = useState(false);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export function ProductPage() {
             .then((res) => setProduct(res.data))
             .catch((err) => {
                 if (err?.status(404)) {
-                    setMessageError('O produto não existe');
+                    setMessage('O produto não existe');
                     setModalError(true);
                     setTimeout(() => {
                         navigate('/');
@@ -37,29 +37,36 @@ export function ProductPage() {
                     navigate('/');
                 }, 2000)
             });
-    }, [idProduct, navigate])
+    }, [idProduct, navigate]);
     
     function addToCart({ idProduct, token }) {
+        console.log({ idProduct, token });
         addProductToCart({ idProduct, token })
             .then((res) => {
+                setMessage('Produto adicionado ao carrinho')
                 setModalSuccess(true);
                 setTimeout(() => {
-                    navigate('/')
-                }, [])
+                    setModalSuccess(false);
+                }, 2000)
             })
             .catch((err) => {
-                if (!token) {
-                    setMessageError('Antes, por favor faça login');
+                if (!token || err.response.status === 401) {
+                    setMessage('Antes, por favor faça login');
                     setModalError(true);
                     setTimeout(() => {
                         navigate('/login');
                     }, 2000);
                 }
-                console.error();
-                setMessageError(err);
-                setModalError(true);
+                if (err.response.status === 500) {
+                    setMessage("Servidor fora de área, tente novamente mais tarde");
+                    setModalError(true);
+                    setTimeout(() => {
+                        navigate('/')
+                    }, 2000)
+                }
             })
     }
+    console.log(token);
 
     return (
         <PageContainer>
@@ -69,26 +76,26 @@ export function ProductPage() {
                 product ?
                     <>
                         <ProductPresentationCard>
-                            <ProductImage src='https://images.unsplash.com/photo-1644433441297-66f97625a279?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1413&q=80' />
-                            <ProductName>{ product.name }</ProductName>
-                            <ProductPrice>{ product.price }</ProductPrice>
+                            <ProductImage src={ product.linkImg } />
+                            <ProductName>{ product.title }</ProductName>
+                            <ProductPrice>{ product.value }</ProductPrice>
                         </ProductPresentationCard>
                         
                         <CartButton onClick={ () => {addToCart({ idProduct, token })} }>Adicionar no carrinho</CartButton>
-                        <ProductName>Artista: { product.artistName }</ProductName>
+                        <ProductName>Artista: { product.author }</ProductName>
                     </>
                 : ''
             }
 
             {
                 modalError ?
-                    <ModalError message={ messageError } setModal={ setModalError } />
+                    <ModalError message={ message } setModal={ setModalError } />
                 : ''
             }
 
             {
                 modalSuccess ?
-                    <ModalSuccess message={ 'Produto adicionado' } />
+                    <ModalSuccess message={ message } />
                 : ''
             }
             
