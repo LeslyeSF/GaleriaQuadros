@@ -17,6 +17,7 @@ export function ShopcartPage() {
     const {token} = useContext(UserContext);
     const {setProductSelected} = useContext(UserContext);
 
+
     const [modalError, setModalError] = useState(false);
     const [messageError, setMessageError] = useState(false);
 
@@ -50,14 +51,10 @@ export function ShopcartPage() {
 
     useEffect(() => {
         findProductsInShoppingCart({ token })
-            .then((res) => {
-                
-                //setProducts(res.data)
-            })
-            .catch((err) => {
-                console.log(err.response);
-                console.error()});
-    }, [])
+            .then((res) => setProducts(res.data))
+            .catch((err) => console.error());
+    }, [products])
+
 
     function removeProduct({ id }) {
         removeProductFromCart({ idProduct: id, token})
@@ -72,7 +69,7 @@ export function ShopcartPage() {
         setProductSelected(products);
         navigate('/checkout');
     }
-    
+
     return (
         <PageContainer>
             <Header setShowWindow={setShowWindow} />
@@ -89,7 +86,9 @@ export function ShopcartPage() {
                             }
                             
                         </ProductsCardInfo>
+
                         <CartButton onClick={ handleCheckout }>Finalizar pedido</CartButton>
+
                     </>
                 :   <ProductName> Não há produtos no carrinho </ProductName>
             }

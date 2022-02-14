@@ -14,6 +14,7 @@ export function ProductPage() {
     const navigate = useNavigate();
     const {token} = useContext(UserContext);
 
+
     const [product, setProduct] = useState(null);
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);

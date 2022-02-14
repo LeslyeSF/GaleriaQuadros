@@ -9,10 +9,12 @@ import { ProductPage } from "./pages/ProductPage/ProductPage";
 import { ShopcartPage } from "./pages/Shopcart/ShopcartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 
+
 export default function App(){
   const [user, setUser] = useState(null);
   const [ token, setToken ] = useState(null);
   const [productSelected, setProductSelected] = useState(null);
+
   console.log(user);
   return(
     <>
