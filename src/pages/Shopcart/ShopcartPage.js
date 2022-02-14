@@ -7,7 +7,9 @@ import { ProductInfo } from "../../components/ProductInfo/ProductInfo";
 import UserContext from "../../contexts/UserContext";
 
 import { findProductsInShoppingCart, removeProductFromCart } from "../../services/galeriaQuadros";
-import { tokenVerifyLocalStorage } from "../../services/tokenService";
+
+import { tokenVerify  } from "../../services/tokenService";
+
 import ModalError from "../../shared/ModalError";
 
 import { PageContainer } from "../../styles/ContainerStyle";
@@ -39,7 +41,8 @@ export function ShopcartPage() {
     }, [token]);
 
     useEffect(() => {
-        tokenVerifyLocalStorage(navigate, setToken, setUser);
+        tokenVerify(navigate, token);
+
         findProductsInShoppingCart({ token })
             .then((res) => setProducts([...res.data]))
             .catch((err) => {

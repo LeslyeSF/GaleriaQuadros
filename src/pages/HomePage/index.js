@@ -12,8 +12,8 @@ import { tokenVerifyLocalStorage } from "../../services/tokenService";
 export default function HomePage(){
   const [frames, setFrames] = useState("");
   const [slide, setSlide] = useState("");
-  const {user, setToken, setUser} = useContext(UserContext);
-  console.log(user);
+  const { setToken, setUser} = useContext(UserContext);
+  
   const navigate = useNavigate();
   useEffect(()=>{
     tokenVerifyLocalStorage(navigate, setToken, setUser);

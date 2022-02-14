@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import {Header} from "../../components/Header/Header.js";
 import UserContext from "../../contexts/UserContext";
 import { checkout } from "../../services/galeriaQuadros.js";
+import { tokenVerify } from "../../services/tokenService.js";
 import {CheckoutScreen, OptionContainer, Option, Title, Value, Amount, ButtonCheckout} from "./style";
 
 export default function CheckoutPage(){
@@ -11,27 +12,30 @@ export default function CheckoutPage(){
     list:[],
     amount: 0
   });
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate();  
 
   useEffect(()=>{
+    tokenVerify(navigate, token);
     let list=[], amount = 0;
     list = productSelected?.map((date, index)=>{
-      amount += parseFloat(date.price);
+      let value = date.value.replace(",",".");
+      amount += parseFloat(value);
       return(
         <Option key={index}>
-          <img src={date.imageUrl} alt={date.name}/>
+          <img src={date.linkImg} alt={date.title}/>
           <div>
-            <span>{date.name}</span>
-            <p>{date.artistName}</p>
+            <span>{date.title}</span>
+            <p>{date.author}</p>
           </div>
           <div>
             <p>valor:</p>
-            <Value>{date.price}</Value>
+            <Value>{date.value}</Value>
           </div>
         </Option>
       );
     });
+    amount = ""+amount;
+    amount = amount.replace(".",",");
     setProducts({
       list: list,
       amount: amount
@@ -39,14 +43,16 @@ export default function CheckoutPage(){
   },[]);
 
   function handleCheckout(){
-    const body = {...products};
+    const body = {
+      list: productSelected,
+      amount: products.amount
+    };
     const promise = checkout(body,token);
     promise.then(()=>{
-      alert("deu certo");
       navigate("/");
     });
-    promise.catch(()=>{
-      alert("falhou");
+    promise.catch((err)=>{
+      console.log(err.response);
     });
   }
   return(
@@ -58,7 +64,7 @@ export default function CheckoutPage(){
       </OptionContainer>
       <Amount>
         <p>Valor total da compra:</p>
-        <Value>{products.amount}</Value>
+        <Value>{products.amount.toFixed(2)}</Value>
       </Amount>
       <ButtonCheckout onClick={handleCheckout}>Finalizar Compra</ButtonCheckout>
     </CheckoutScreen>

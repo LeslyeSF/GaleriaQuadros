@@ -1,14 +1,17 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Container, Button, BDiv } from "./Style";
+import { Container, Button, BDiv, Title } from "./Style";
+import {Header} from "../../components/Header/Header";
+
 import UserContext from "../../contexts/UserContext";
-import axios from "axios";
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
-import { Header } from "../../components/Header/Header";
+
 import OptionsWindow from "../../components/OptionsWindow";
+
+import { logIn } from "../../services/galeriaQuadros";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -30,11 +33,7 @@ export default function Login() {
         setFormData({ ...formData });
     }
 
-    const BASE_URL = "http://localhost:5000";
-    function logIn(formData) {
-        const promise = axios.post(`${BASE_URL}/login`, formData);
-        return promise;
-    }
+    
 
     function handleLogin(e) {
         e.preventDefault();
@@ -85,9 +84,9 @@ export default function Login() {
 
     return (
         <>
-            <Header setShowWindow={setShowWindow} />
-            {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
+            <Header />
             <Container>
+                <Title>Login</Title>
                 <form on onSubmit={handleLogin}>
                     <input
                         disabled={loading}
@@ -112,6 +111,12 @@ export default function Login() {
                 <Link to="/signup">
                     Ainda não tem uma conta? Clique aqui para se cadastrar
                 </Link>
+
+            {
+                modalError ?
+                    <ModalError message={ messageError } setModal={ setModalError } />
+                : ''
+            }
 
                 {
                     modalError ?

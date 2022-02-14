@@ -21,15 +21,7 @@ export default function NavbarOptions(){
     <IconContext.Provider value={{className: "react-icons"}}>
       <SearchContainer>
         <AiOutlineMenu onClick={()=> setShowWindow(true)}/>
-        <InputConatiner>
-          <input 
-          placeholder={"Pesquisar"}
-          value={search}
-          onChange={e=> setSearch(e.target.value)}/>
-          <div onClick={handleSearch}>
-            <FiSearch/>
-          </div>
-        </InputConatiner>
+  
         <FaShoppingCart onClick={()=> (token)? navigate("/shopcart") : navigate("/login") }/>
       </SearchContainer>
       {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}

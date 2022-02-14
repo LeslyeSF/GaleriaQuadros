@@ -1,27 +1,18 @@
 import styled from "styled-components";
 
 const CheckoutScreen = styled.div`
-width: 375px;
+width: 100%;
 min-height: 100vh;
 
 background-color: #F8F7F3;
-padding: 50px 10px 50px 10px;
+padding: 220px 10px 50px 10px;
 
 display: flex;
 flex-direction: column;
 align-items: center;
 gap: 15px;
 `;
-const Carousel = styled.div`
-width: 375px;
-height: 220px;
-  div{
-    height: 200px;
-    overflow: hidden;
-  }
-padding: 10px;
-background-color: #D2CAC0;
-`;
+
 const OptionContainer = styled.div`
 width: 355px;
 display: flex;
@@ -51,14 +42,14 @@ const Value = styled.span`
   color: #FF0000;
 `;
 const Title = styled.h1`
-width: 100%;
+width: 355px;
 color: #252525;
 font-size: 25px;
 font-weight: 700;
 `;
 
 const Amount = styled.div`
-width: 100%;
+width: 355px;
 display: flex;
 justify-content: space-between;
 color: #252525;

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const HomeScreen = styled.div`
-width: 375px;
+width: 100%;
 min-height: 100vh;
 
 background-color: #F8F7F3;
-padding: 50px 0px 50px 0px;
+padding: 220px 10px 50px 10px;
 
 display: flex;
 flex-direction: column;

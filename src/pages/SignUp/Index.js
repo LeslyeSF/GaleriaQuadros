@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Container, Button, BDiv, Input } from "./Style";
+
+import { Container, Button, BDiv, Input, Title } from "./Style";
+import {Header} from "../../components/Header/Header";
 
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
 import UserContext from "../../contexts/UserContext";
-
-import axios from "axios";
+import { signUp } from "../../services/galeriaQuadros";
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
@@ -49,12 +50,7 @@ export default function SignUp() {
         setFormData({ ...formData });
     }
 
-    const BASE_URL = "http://localhost:5000";
-
-    function signUp(formData) {
-        const promise = axios.post(`${BASE_URL}/signup`, formData);
-        return promise;
-    }
+    
 
     async function handleSignUp(e) {
         e.preventDefault();
@@ -102,9 +98,9 @@ export default function SignUp() {
 
     return (
         <>
-            <Header setShowWindow={setShowWindow} />
-            {(showWindow)? <OptionsWindow setShowWindow={setShowWindow}/> : ""}
+            <Header />
             <Container>
+                <Title>Cadastro</Title>
                 <form on onSubmit={handleSignUp}>
                     <Input
                         compare={true}

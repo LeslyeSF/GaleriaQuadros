@@ -6,9 +6,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10px;
 
-  margin-top: 220px;
+  padding-top: 220px;
+  background: #F8F7F3;
 
   form {
     display: flex;
@@ -94,6 +94,13 @@ const Input = styled.input`
     }
 
     outline: 0;
-`
+`;
 
-export { Container, Button, BDiv, Input };
+const Title = styled.h1`
+width: 355px;
+color: #252525;
+font-size: 25px;
+font-weight: 700;
+`;
+
+export { Container, Button, BDiv, Input, Title };
