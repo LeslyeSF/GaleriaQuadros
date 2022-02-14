@@ -12,6 +12,7 @@ flex-direction: column;
 align-items: center;
 gap: 15px;
 `;
+
 const OptionContainer = styled.div`
 width: 355px;
 display: flex;
