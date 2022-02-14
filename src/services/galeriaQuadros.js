@@ -16,32 +16,20 @@ function getProductById(id) {
 }
 
 function addProductToCart({ idProduct, token}) {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
+    const config = createConfig(token);
 
     const promise = axios.post(`${api}/shopcart/${ idProduct }`, {}, config);
     return promise;
 }
 
 function findProductsInShoppingCart({ token}) {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
+    const config = createConfig(token);
     const promise = axios.get(`${api}/shopcart`, config);
     return promise;
 }
 
 function removeProductFromCart({ idProduct, token}) {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    }
+    const config = createConfig(token);
     const promise = axios.delete(`${api}/shopcart/${ idProduct }`, config);
 
     return promise;
@@ -49,7 +37,7 @@ function removeProductFromCart({ idProduct, token}) {
 
 function checkout(body,token){
     const config = createConfig(token);
-    const promise = axios.post(`http://localhost:5000/checkout`, body, config);
+    const promise = axios.post(`${api}/checkout`, body, config);
     return promise;
 }
 function getData(){
@@ -59,7 +47,7 @@ function getData(){
 }
 function logOutPromise(token){
     const config = createConfig(token);
-    const promise = axios.post("http://localhost:5000/logout",{},config);
+    const promise = axios.post(`${api}/logout`,{},config);
     return promise;
 }
 
