@@ -9,6 +9,14 @@ function createConfig(token){
     };
     return config;
 }
+function signUp(formData) {
+    const promise = axios.post(`${api}/signup`, formData);
+    return promise;
+}
+function logIn(formData) {
+    const promise = axios.post(`${api}/login`, formData);
+    return promise;
+}
 
 function getProductById(id) {
     const promise = axios.get(`${api}/products/${id}`);
@@ -53,6 +61,8 @@ function logOutPromise(token){
 
 
 export {
+    logIn,
+    signUp,
     getProductById,
     addProductToCart,
     checkout,

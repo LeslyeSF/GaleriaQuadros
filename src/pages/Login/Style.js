@@ -6,8 +6,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 68px;
-  background: #d2cac0;
+  padding-top: 220px;
+  background: #F8F7F3;
   form {
     display: flex;
     flex-direction: column;
@@ -68,5 +68,11 @@ const Button = styled.button`
   color: #252525;
   margin-bottom: 25px;
 `;
+const Title = styled.h1`
+width: 355px;
+color: #252525;
+font-size: 25px;
+font-weight: 700;
+`;
 
-export { Container, Button, BDiv };
+export { Container, Button, BDiv, Title };
