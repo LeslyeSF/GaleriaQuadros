@@ -46,7 +46,7 @@ export default function SignUp() {
         setFormData({ ...formData });
     }
 
-    const BASE_URL = "http://localhost:5000";
+    const BASE_URL = "https://galeria-quadros.herokuapp.com";
 
     function signUp(formData) {
         const promise = axios.post(`${BASE_URL}/signup`, formData);
