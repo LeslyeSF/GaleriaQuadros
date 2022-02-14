@@ -2,12 +2,15 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Container, Button, BDiv, Title } from "./Style";
 import {Header} from "../../components/Header/Header";
-import UserContext from "../../contexts/UserContext";
 
+import UserContext from "../../contexts/UserContext";
 
 import ModalError from "../../shared/ModalError";
 import ModalSuccess from "../../shared/ModalSuccess";
 import { tokenVerifyLocalStorage } from "../../services/tokenService";
+
+import OptionsWindow from "../../components/OptionsWindow";
+
 import { logIn } from "../../services/galeriaQuadros";
 
 export default function Login() {
@@ -20,6 +23,8 @@ export default function Login() {
     const [modalError, setModalError] = useState(false);
     const [modalSuccess, setModalSuccess] = useState(false);
     const [messageError, setMessageError] = useState(false);
+
+    const [showWindow, setShowWindow] = useState(false);
 
     useEffect(() => tokenVerifyLocalStorage(navigate, setToken, setUser) ,[]);
 
@@ -78,33 +83,34 @@ export default function Login() {
     }
 
     return (
-        <Container>
-            <Header/>
-            <Title>Login</Title>
-            <form on onSubmit={handleLogin}>
-                <input
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.email}
-                    type="email"
-                    placeholder="E-mail"
-                    name="email"
-                />
-                <input
-                    disabled={loading}
-                    onChange={handleInputChange}
-                    value={formData.password}
-                    type="password"
-                    placeholder="Senha"
-                    name="password"
-                />
-                <BDiv>
-                    <Button disabled={loading}>Entrar</Button>
-                </BDiv>
-            </form>
-            <Link to="/signup">
-                <p>Ainda não tem uma conta? <br/>Clique aqui para se cadastrar</p>
-            </Link>
+        <>
+            <Header />
+            <Container>
+                <Title>Login</Title>
+                <form on onSubmit={handleLogin}>
+                    <input
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.email}
+                        type="email"
+                        placeholder="E-mail"
+                        name="email"
+                    />
+                    <input
+                        disabled={loading}
+                        onChange={handleInputChange}
+                        value={formData.password}
+                        type="password"
+                        placeholder="Senha"
+                        name="password"
+                    />
+                    <BDiv>
+                        <Button disabled={loading}>Entrar</Button>
+                    </BDiv>
+                </form>
+                <Link to="/signup">
+                    Ainda não tem uma conta? Clique aqui para se cadastrar
+                </Link>
 
             {
                 modalError ?
@@ -112,11 +118,18 @@ export default function Login() {
                 : ''
             }
 
-            {
-                modalSuccess ?
-                    <ModalSuccess />
-                : ''
-            }
-        </Container>
+                {
+                    modalError ?
+                        <ModalError message={ messageError } setModal={ setModalError } />
+                    : ''
+                }
+
+                {
+                    modalSuccess ?
+                        <ModalSuccess message='' />
+                    : ''
+                }
+            </Container>
+        </>
     );
 }

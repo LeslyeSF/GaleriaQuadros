@@ -4,7 +4,6 @@ import logo from '../../styles/logo-removebg-preview.png'
 import NavbarOptions from "../NavbarOptions";
 
 export function Header() {
-
     const navigate = useNavigate();
     return (
         <NavBar>

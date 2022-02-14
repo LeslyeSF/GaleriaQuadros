@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+  width: 90vw;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   padding-top: 220px;
   background: #F8F7F3;
+
   form {
     display: flex;
     flex-direction: column;
@@ -18,7 +20,7 @@ const Container = styled.div`
     width: 303px;
     height: 45px;
     margin-bottom: 6px;
-    background: #e7e8e3;
+    background: #E7E8E3;
     border: hidden;
     box-sizing: border-box;
     border-radius: 15px;
@@ -26,6 +28,7 @@ const Container = styled.div`
     font-size: 20px;
     line-height: 25px;
     margin-bottom: 27px;
+    outline: 0;
     ::placeholder {
       color: #252525;
     }

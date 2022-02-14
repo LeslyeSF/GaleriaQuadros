@@ -10,8 +10,7 @@ export function ProductInfo({
     price,
     removeProduct,
 }) {
-    useEffect(() => {}, [id])
-    
+    useEffect(() => {}, [id]);
     
     return (
             <ProductCard>
