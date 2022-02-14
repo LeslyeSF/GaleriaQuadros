@@ -6,18 +6,11 @@ import UserContext from "../../contexts/UserContext";
 import { IconContext } from "react-icons/lib";
 import { AiOutlineExport } from 'react-icons/ai';
 import { logOutPromise } from "../../services/galeriaQuadros";
-import { useState } from "react/cjs/react.development";
-import ModalError from "../../shared/ModalError.js";
-import ModalSuccess from "../../shared/ModalSuccess.js";
 
 export default function OptionsWindow({setShowWindow}){
   const {token, user, setToken, setUser} = useContext(UserContext);
   
   const navigate = useNavigate();
-
-  const [modalError, setModalError] = useState(false);
-  const [modalSuccess, setModalSuccess] = useState(false);
-  const [message, setMessage] = useState(false);  
 
   function handleLogOut(){
     const promise = logOutPromise(token);
@@ -27,14 +20,10 @@ export default function OptionsWindow({setShowWindow}){
       localStorage.removeItem("tokenGQ");
       setToken(null);
       setUser(null);
-      setMessage('Saindo da conta');
-      setModalSuccess(true);
       navigate("/");
     });
     promise.catch((err)=>{
       console.log(err);
-      setMessage('Ocorreu um erro, tente mais tarde');
-      setModalError(true);
     });
   }
   
@@ -56,17 +45,6 @@ export default function OptionsWindow({setShowWindow}){
           </div>:
         ""}
       </Window>
-      {
-        modalError ?
-          <ModalError message={ message } setModal={ setModalError } />
-        : ''
-      }
-
-      {
-        modalSuccess ?
-          <ModalSuccess message={ message } />
-        : ''
-      }
     </IconContext.Provider>
   );
 }
